@@ -59,11 +59,6 @@ class _HomePageState extends State<HomePage> {
                     ),
                     actions: [
                       TextButton(
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                          child: const Text("Cancelar")),
-                      TextButton(
                           onPressed: () async {
                             try {
                               await calculadoraImcRepository.adicionar(
@@ -79,13 +74,6 @@ class _HomePageState extends State<HomePage> {
                                       title: const Text("Calculadora IMC"),
                                       content: const Text(
                                           "Tente informar uma altura e peso válidos"),
-                                      actions: [
-                                        TextButton(
-                                            onPressed: () {
-                                              Navigator.pop(context);
-                                            },
-                                            child: const Text("Ok"))
-                                      ],
                                     );
                                   });
                               return;
@@ -117,7 +105,7 @@ class _HomePageState extends State<HomePage> {
               child: Card(
                 margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
                 elevation: 8,
-                shadowColor: Colors.grey,
+                shadowColor: Colors.blue,
                 child: ListTile(
                   title: Column(
                     children: [
@@ -133,7 +121,7 @@ class _HomePageState extends State<HomePage> {
                       const SizedBox(
                         width: 20,
                       ),
-Text("A stiuação desse IMC é: ${ImcTabelaService.calcularImc(calculos.calculo)}", textAlign: TextAlign.center,),                    ],
+Text("A situação desse IMC é: ${ImcTabelaService.calcularImc(calculos.calculo)}", textAlign: TextAlign.center,),                    ],
                   ),
                 ),
               ),
