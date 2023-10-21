@@ -1,20 +1,25 @@
 import 'package:calculadora_imc/model/calculadora_imc.dart';
+import 'package:hive/hive.dart';
 
 class CalculadoraImcRepository {
-  List<CalculadorImc> _list = [];
+  static const String tabelaIMC = "imc";
 
-  Future<void> adicionar(CalculadorImc calculo) async {
-    await Future.delayed(Duration(microseconds: 200));
-    _list.add(calculo);
-  }
-
-  Future<void> remover(String id) async {
-    await Future.delayed(Duration(microseconds: 200));
-    _list.remove(_list.where((calculo) => calculo.id == id).first);
+  Future<void> abrirBancoDeDados() async {
+    await Hive.openBox<CalculadorImc>(tabelaIMC);
   }
 
   Future<List<CalculadorImc>> listar() async {
-    await Future.delayed(Duration(microseconds: 200));
-    return _list;
+    final db = await Hive.openBox<CalculadorImc>(tabelaIMC);
+    return db.values.toList();
+  }
+
+  Future<void> adicionar(CalculadorImc imc) async {
+    final db = await Hive.openBox<CalculadorImc>(tabelaIMC);
+    db.add(imc);
+  }
+
+  Future<void> remover(int id) async {
+    final db = await Hive.openBox<CalculadorImc>(tabelaIMC);
+    db.deleteAt(id);
   }
 }

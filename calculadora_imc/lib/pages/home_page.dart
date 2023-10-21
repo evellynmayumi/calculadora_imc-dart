@@ -4,8 +4,6 @@ import 'package:calculadora_imc/service/imc_tabela_service.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
-
   @override
   State<HomePage> createState() => _HomePageState();
 }
@@ -19,7 +17,8 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
-    super.initState();
+    super.initState(); 
+    calculadoraImcRepository.abrirBancoDeDados();
     listarCalculos();
   }
 
@@ -59,17 +58,17 @@ class _HomePageState extends State<HomePage> {
                     ),
                     actions: [
                       TextButton(
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                          child: const Text("Cancelar")),
-                      TextButton(
                           onPressed: () async {
                             try {
-                              await calculadoraImcRepository.adicionar(
-                                  CalculadorImc(
-                                      double.parse(pesoController.text),
-                                      double.parse(alturaController.text)));
+                              await calculadoraImcRepository.adicionar(CalculadorImc(
+                                id: _listaCalculos.length,
+                                peso: double.parse(pesoController.text),
+                                altura: double.parse(alturaController.text),
+                                imc: ImcTabelaService.CalculadorImc(
+                                    double.parse(pesoController.text),
+                                    double.parse(alturaController.text)),
+                                data: DateTime.now(),
+                              ));
                             } catch (e) {
                               // ignore: use_build_context_synchronously
                               showDialog(
@@ -79,13 +78,6 @@ class _HomePageState extends State<HomePage> {
                                       title: const Text("Calculadora IMC"),
                                       content: const Text(
                                           "Tente informar uma altura e peso válidos"),
-                                      actions: [
-                                        TextButton(
-                                            onPressed: () {
-                                              Navigator.pop(context);
-                                            },
-                                            child: const Text("Ok"))
-                                      ],
                                     );
                                   });
                               return;
@@ -113,7 +105,7 @@ class _HomePageState extends State<HomePage> {
                 await calculadoraImcRepository.remover(calculos.id);
                 listarCalculos();
               },
-              key: Key(calculos.id),
+              key: Key(calculos.id as String),
               child: Card(
                 margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
                 elevation: 8,
@@ -129,11 +121,15 @@ class _HomePageState extends State<HomePage> {
                       const SizedBox(
                         width: 20,
                       ),
-                      Text("IMC: ${calculos.calculo.toStringAsFixed(1)}"),
+                      Text("IMC: ${calculos.imc.toStringAsFixed(1)}"),
                       const SizedBox(
                         width: 20,
                       ),
-Text("A stiuação desse IMC é: ${ImcTabelaService.calcularImc(calculos.calculo)}", textAlign: TextAlign.center,),                    ],
+                      Text(
+                        "A situação desse IMC é: ${ImcTabelaService.calcularImc(calculos.imc)}",
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
                   ),
                 ),
               ),

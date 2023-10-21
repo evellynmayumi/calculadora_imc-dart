@@ -1,21 +1,46 @@
 class ImcTabelaService {
-  String medidorImc(double imc) {
-    if (imc < 16) {
-      return "Magreza grave";
-    } else if (imc > 16 && imc < 17) {
-      return "Magreza moderada";
-    } else if (imc > 17 && imc < 18.5) {
-      return "Magreza leve";
-    } else if (imc > 18.5 && imc < 25) {
-      return "Saudável";
-    } else if (imc > 25 && imc < 30) {
-      return "Sobrepeso";
-    } else if (imc > 30 && imc < 35) {
-      return "Obesidade Grau I";
-    } else if (imc > 35 && imc < 40) {
-      return "Obesidade Grau II (severa)";
-    } else {
-      return "Obesidade Grau III (mórbida)";
+  static double medidorImc(double peso, double altura) {
+    return peso / (altura * altura);
+  }
+
+  static String calcularImc(double imc) {
+    switch (imc.floor()) {
+      case 16:
+      case 17:
+        return "Magreza grave";
+      case 18:
+      case 19:
+        return "Magreza moderada";
+      case 20:
+      case 21:
+        return "Magreza leve";
+      case 22:
+      case 23:
+      case 24:
+        return "Normal";
+      case 25:
+      case 26:
+        return "Sobrepeso";
+      case 27:
+      case 28:
+      case 29:
+        return "Obesidade grau I";
+      case 30:
+      case 31:
+      case 32:
+      case 33:
+        return "Obesidade grau II";
+      case 34:
+      case 35:
+      case 36:
+      case 37:
+        return "Obesidade grau III";
+      default:
+        return "Obesidade grau IV";
     }
+  }
+
+  static double CalculadorImc(double peso, double altura) {
+    return medidorImc(peso, altura);
   }
 }
