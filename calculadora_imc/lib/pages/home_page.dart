@@ -109,7 +109,7 @@ class _HomePageState extends State<HomePage> {
               child: Card(
                 margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
                 elevation: 8,
-                shadowColor: Colors.grey,
+                shadowColor: Colors.blue,
                 child: ListTile(
                   title: Column(
                     children: [
@@ -125,11 +125,7 @@ class _HomePageState extends State<HomePage> {
                       const SizedBox(
                         width: 20,
                       ),
-                      Text(
-                        "A situação desse IMC é: ${ImcTabelaService.calcularImc(calculos.imc)}",
-                        textAlign: TextAlign.center,
-                      ),
-                    ],
+Text("A situação desse IMC é: ${ImcTabelaService.calcularImc(calculos.imc)}", textAlign: TextAlign.center,),                    ],
                   ),
                 ),
               ),
